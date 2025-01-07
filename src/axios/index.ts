@@ -1,4 +1,9 @@
 import axios, { AxiosError } from 'axios';
+import { notify } from "@kyvg/vue3-notification";
+
+interface IErrors {
+  ['string']: string
+}
 
 const api = axios.create({
   baseURL: 'https://stage.achareh.ir/api/', // Base URL for all requests
@@ -19,9 +24,24 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
+    if (response.status === 201) notify({
+      type: 'success',
+      text: `عملیات با موفقیت انجام شد`,
+    })
+
     return response;
   },
   (error: AxiosError) => {
+    const title = error.message
+    const errors = error.response?.data as IErrors
+    for (const error in errors) {
+      notify({
+        title,
+        text: `${error} ${errors[error]}`,
+        type: 'error',
+        ignoreDuplicates: true,
+      });
+    }
     return Promise.reject(error);
   }
 );

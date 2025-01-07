@@ -24,5 +24,6 @@ const currentRouteName = computed(() => route.name)
   <div class="px-4 py-1">
     <RouterView />
   </div>
+  <notifications  position="bottom right" />
 
 </template>

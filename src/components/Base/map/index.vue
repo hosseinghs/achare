@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { ILocation } from './type.d.ts'
+import { ILocation } from './type'
 import mapMarker from '@/assets/images/map-marker.webp'
 
 const emits = defineEmits<{

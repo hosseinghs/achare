@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import type { IUserInfo } from '@/services/type'
 import type { ILocation } from '@/Base/type.d.ts'
-import Map from '@/components/Base/Map.vue'
+import Map from '@/components/Base/map/index.vue'
 import AddAddressUserForm from './AddAddressUserForm.vue'
 import { createAddressAPI } from '@/services/address'
 
