@@ -1,5 +1,6 @@
 $base-color: #00bfa6
 $white: #ffffff
+$error-color: #E61236
 
 @font-face
   font-family: Vazir
@@ -66,12 +67,6 @@ button
     background-color: $white
     color: $base-color
 
-  
-
-
-
-
-
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -82,3 +77,10 @@ input::-webkit-inner-spin-button
 /* Firefox */
 input[type=number]
   -moz-appearance: textfield
+
+
+.text-error
+  color: $error-color
+
+.invalid-input
+  border-color: $error-color
