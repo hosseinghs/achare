@@ -13,7 +13,7 @@ const routes = [
     meta: {
       title: 'مشاهده آدرس ها'
     },
-    component: () => import('../views/AddressPage.vue'),
+    component: () => import('../views/AddressList.vue'),
   },
 ]
 

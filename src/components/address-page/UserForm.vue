@@ -24,11 +24,11 @@ const computedForm = computed(() => props.form)
         </div>
         <div class="form-item">
           <label class="d-block pb-2" for="coordinate_mobile">شماره تلفن همراه</label>
-          <input v-model="computedForm.coordinate_mobile" name="coordinate_mobile" placeholder=" مثال: ۰۹۱۲۱۲۳۴۵۶۷" type="number">
+          <input v-model="computedForm.coordinate_mobile" name="coordinate_mobile" placeholder=" مثال: ۰۹۱۲۱۲۳۴۵۶۷" >
         </div>
         <div class="form-item">
           <label class="d-block pb-2" for="coordinate_phone_number">شماره تلفن ثابت (اختیاری)</label>
-          <input v-model="computedForm.coordinate_phone_number" name="coordinate_phone_number" placeholder="مثال: ۰۲۱۱۲۳۴۵۶۷" type="number">
+          <input v-model="computedForm.coordinate_phone_number" name="coordinate_phone_number" placeholder="مثال: ۰۲۱۱۲۳۴۵۶۷">
         </div>
         <div class="form-item address">
           <label class="d-block pb-2" for="address">آدرس</label>

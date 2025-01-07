@@ -4,12 +4,14 @@ import type { IUserInfo } from '@/services/type';
 import type { ILocation } from '@/Base/type.d.ts'
 import Map from '@/components/Base/Map.vue'
 import UserForm from './UserForm.vue'
+import { createAddressAPI } from '@/services/address'
 
 enum LoginSteps {
   USER_FORM = 1,
   CHOOSE_LAT_LANG = 2
 }
 
+const loading = ref(false)
 const steps = ref<LoginSteps>(LoginSteps.USER_FORM)
 const form = ref<IUserInfo>({
   lat: 0,
@@ -38,6 +40,18 @@ const latLang = computed({
 
 const onClick = () => {
   if (steps.value === LoginSteps.USER_FORM) steps.value = LoginSteps.CHOOSE_LAT_LANG
+  else if (steps.value === LoginSteps.CHOOSE_LAT_LANG) createAddress()
+}
+
+const createAddress = async () => {
+ try {
+    loading.value = true
+    const res = await createAddressAPI(form.value)
+    console.log(res);
+  }
+  finally {
+    loading.value = false
+  }
 }
 
 </script>

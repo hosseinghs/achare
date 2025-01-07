@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const api = axios.create({
   baseURL: 'https://stage.achareh.ir/api/', // Base URL for all requests
-  timeout: 10000, // Set a timeout (in milliseconds)
   headers: {
     'Content-Type': 'application/json', // Default content type for requests
-    'Authorization': `Bearer MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4`, // Authorization header if needed
+    'Authorization': `Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4`, // Authorization header if needed
   },
 });
 
@@ -13,7 +12,7 @@ api.interceptors.request.use(
   (config) => {
     return config;
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
@@ -22,7 +21,7 @@ api.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
