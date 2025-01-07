@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue';
-import type { IUserInfo } from '@/services/type';
+import { ref, computed } from 'vue'
+import type { IUserInfo } from '@/services/type'
 import type { ILocation } from '@/Base/type.d.ts'
 import Map from '@/components/Base/Map.vue'
-import UserForm from './UserForm.vue'
+import AddAddressUserForm from './AddAddressUserForm.vue'
 import { createAddressAPI } from '@/services/address'
 
 enum LoginSteps {
   USER_FORM = 1,
-  CHOOSE_LAT_LANG = 2
+  CHOOSE_LAT_LANG = 2,
 }
 
 const loading = ref(false)
@@ -27,15 +27,15 @@ const form = ref<IUserInfo>({
 
 const latLang = computed({
   get() {
-    return { lat: form.lat, lang: form.lng }
+    return { lat: form.value.lat, lang: form.value.lng }
   },
   set({ lat, lng }: ILocation) {
     form.value = {
       ...form.value,
       lat,
-      lng
+      lng,
     }
-  }
+  },
 })
 
 const onClick = () => {
@@ -44,25 +44,23 @@ const onClick = () => {
 }
 
 const createAddress = async () => {
- try {
+  try {
     loading.value = true
     const res = await createAddressAPI(form.value)
-    console.log(res);
-  }
-  finally {
+    console.log(res)
+  } finally {
     loading.value = false
   }
 }
-
 </script>
 
 <template>
-   <h5 class="mb-3 ">ثبت آدرس</h5>
-    <div class="bg-white px-4 py-2">
-      <UserForm v-if="steps === LoginSteps.USER_FORM" :form="form" />
-      <Map v-else v-model="latLang" />
-    </div>
-    <div>
-      <button @click="onClick">ثبت و ادامه</button>
-    </div>
+  <h5 class="mb-3">ثبت آدرس</h5>
+  <div class="bg-white px-4 py-2">
+    <AddAddressUserForm v-if="steps === LoginSteps.USER_FORM" :form="form" />
+    <Map v-else v-model="latLang" />
+  </div>
+  <div>
+    <button @click="onClick">ثبت و ادامه</button>
+  </div>
 </template>
