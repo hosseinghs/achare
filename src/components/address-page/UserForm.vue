@@ -48,9 +48,6 @@ const computedForm = computed(() => props.form)
   gap: 1rem
   grid-template-columns: repeat(3, 1fr)
 
-  .form-item .address
-    grid-column: span 2  // Making the address span 2 columns in desktop
-
   @media (max-width: 768px)
-    grid-template-columns: repeat(1, 1fr)  // Mobile view with 1 column
+    grid-template-columns: repeat(1, 1fr)
 </style>

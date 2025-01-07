@@ -13,8 +13,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@neshan-maps-platform/ol": "^1.0.5",
-    "@neshan-maps-platform/vue3-openlayers": "^2.0.1",
     "achare": "file:",
     "axios": "^1.7.9",
     "sass": "^1.83.1",

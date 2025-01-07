@@ -11,7 +11,7 @@ const currentRouteName = computed(() => route.name)
 
 <template>
   <header class="d-flex align-items-center justify-content-between mb-4">
-    <img alt="achare" src="@/assets/achareh.webp" />
+    <img alt="achare" src="@/assets/images/achareh.webp" />
     <div>
       <nav class="px-2">
         <RouterLink v-for="{ name, meta } in routes" :key="name" :to="{ name }" :class="['mx-1', { 'primary': name === currentRouteName }]">

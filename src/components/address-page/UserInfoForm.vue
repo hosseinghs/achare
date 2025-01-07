@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import type { IUserInfo } from '@/services/type';
+import type { ILocation } from '@/Base/type.d.ts'
 import Map from '@/components/Base/Map.vue'
 import UserForm from './UserForm.vue'
 
@@ -10,7 +11,7 @@ enum LoginSteps {
 }
 
 const steps = ref<LoginSteps>(LoginSteps.USER_FORM)
-const form = reactive<IUserInfo>({
+const form = ref<IUserInfo>({
   lat: 0,
   lng: 0,
   region: 1,
@@ -22,8 +23,20 @@ const form = reactive<IUserInfo>({
   coordinate_phone_number: '',
 })
 
+const latLang = computed({
+  get() {
+    return { lat: form.lat, lang: form.lng }
+  },
+  set({ lat, lng }: ILocation) {
+    form.value = {
+      ...form.value,
+      lat,
+      lng
+    }
+  }
+})
+
 const onClick = () => {
-  console.log(form);
   if (steps.value === LoginSteps.USER_FORM) steps.value = LoginSteps.CHOOSE_LAT_LANG
 }
 
@@ -32,12 +45,8 @@ const onClick = () => {
 <template>
    <h5 class="mb-3 ">ثبت آدرس</h5>
     <div class="bg-white px-4 py-2">
-      <template v-if="steps === 1">
-          <UserForm :form="form" />
-      </template>
-      <template v-else>
-        <Map />
-      </template>
+      <UserForm v-if="steps === LoginSteps.USER_FORM" :form="form" />
+      <Map v-else v-model="latLang" />
     </div>
     <div>
       <button @click="onClick">ثبت و ادامه</button>
