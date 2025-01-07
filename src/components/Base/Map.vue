@@ -16,11 +16,9 @@ function onInit(map: Map) {
   <div class="map-container">
       <NeshanMap
           defaultType="neshan"
-          mapKey="web.911110f499b34be397f23cd2cee474eb"
-          serviceKey="YOUR_SERVICE_KEY"
+          mapKey="web.44cb547d8a494e51b43b3c3bd237cefa"
           :center="{latitude: 36.311559, longitude: 59.5870851}"
           :zoom="14"
-          :poi="true"
           @on-init="onInit"
       />
   </div>

@@ -1,0 +1,84 @@
+$base-color: #00bfa6
+$white: #ffffff
+
+@font-face
+  font-family: Vazir
+  src: url('./font/Vazir.eot')
+  src: url('./font/Vazir.eot?#iefix') format('embedded-opentype')
+  src: url('./font/Vazir.woff') format('woff')
+  src: url('./font/Vazir.ttf') format('truetype')
+  font-weight: normal
+
+@font-face
+  font-family: Vazir
+  src: url('./font/Vazir-Bold.eot')
+  src: url('./font/Vazir-Bold.eot?#iefix') format('embedded-opentype')
+  src: url('./font/Vazir-Bold.woff') format('woff')
+  src: url('./font/Vazir-Bold.ttf') format('truetype')
+  font-weight: bold
+
+@font-face
+  font-family: Vazir
+  src: url('./font/Vazir-Light.eot')
+  src: url('./font/Vazir-Light.eot?#iefix') format('embedded-opentype')
+  src: url('./font/Vazir-Light.woff') format('woff')
+  src: url('./font/Vazir-Light.ttf') format('truetype')
+  font-weight: 300
+
+body, a
+  margin: 0
+  padding: 0
+  text-decoration: none
+
+body
+  font-family: Vazir
+  background-color: #F5F5F5
+
+header
+  background-color: $white
+  padding: 1rem
+
+input
+  width: 100%
+  outline: none
+  padding: 0.5rem 1rem
+  outline: none
+  border: 1px solid #D8D8D8
+  border-radius: 6px
+  &:focus
+    border-color: $base-color
+
+.bg-white
+  background-color: $white
+
+.primary
+  color: $base-color
+
+button
+  width: 100%
+  padding: 0.5rem 0.75rem
+  color: $white
+  border: none
+  border-radius: 6px
+  background-color: $base-color
+  transition: background-color 0.1s ease-in, color 0.1s ease-in  
+  &:hover
+    background-color: $white
+    color: $base-color
+
+  
+
+
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button 
+  -webkit-appearance: none
+  margin: 0
+
+/* Firefox */
+input[type=number]
+  -moz-appearance: textfield

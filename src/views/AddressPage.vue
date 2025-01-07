@@ -7,7 +7,7 @@ const UserFormInfo = defineAsyncComponent(() => import('@/components/address-pag
 
 
 <template>
-  <div>
+  <div class="">
     <UserFormInfo />
   </div>
 </template>

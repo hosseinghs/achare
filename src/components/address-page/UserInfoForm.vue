@@ -2,8 +2,14 @@
 import { ref, reactive } from 'vue';
 import type { IUserInfo } from '@/services/type';
 import Map from '@/components/Base/Map.vue'
+import UserForm from './UserForm.vue'
 
-const steps = ref<1 | 2>(1)
+enum LoginSteps {
+  USER_FORM = 1,
+  CHOOSE_LAT_LANG = 2
+}
+
+const steps = ref<LoginSteps>(LoginSteps.USER_FORM)
 const form = reactive<IUserInfo>({
   lat: 0,
   lng: 0,
@@ -16,47 +22,24 @@ const form = reactive<IUserInfo>({
   coordinate_phone_number: '',
 })
 
+const onClick = () => {
+  console.log(form);
+  if (steps.value === LoginSteps.USER_FORM) steps.value = LoginSteps.CHOOSE_LAT_LANG
+}
+
 </script>
 
 <template>
-   <h4>ثبت آدرس</h4>
-    <div class="px-4 py-2">
+   <h5 class="mb-3 ">ثبت آدرس</h5>
+    <div class="bg-white px-4 py-2">
       <template v-if="steps === 1">
-        <h5>
-          لطفا مشخصات و آدرس خود را وارد کنید
-        </h5>
-      <div class="row gap-1 justify-content-center">
-        <div class="col-3">
-          <label class="d-block pb-2" for="first-name">نام</label>
-          <input v-model="form.first_name" name="first-name" type="text">
-        </div>
-        <div class="col-3">
-          <label class="d-block pb-2" for="last-name">نام خانوادگی</label>
-          <input v-model="form.last_name" name="last-name" placeholder="مثال: رضایی" type="text">
-        </div>
-        <div class="col-3">
-          <label class="d-block pb-2" for="coordinate_mobile">شماره تلفن همراه</label>
-          <input v-model="form.coordinate_mobile" name="coordinate_mobile" placeholder=" مثال: ۰۹۱۲۱۲۳۴۵۶۷" type="number">
-        </div>
-        <div class="col-3">
-          <label class="d-block pb-2" for="coordinate_phone_number">شماره تلفن ثابت (اختیاری)</label>
-          <input v-model="form.coordinate_phone_number" name="coordinate_phone_number" placeholder="مثال: ۰۲۱۱۲۳۴۵۶۷" type="number">
-        </div>
-        <div class="col-6">
-          <label class="d-block pb-2" for="address">آدرس</label>
-          <input v-model="form.address" name="address" type="text">
-        </div>
-        <div class="col-12 d-flex mt-2">
-          <label class="ms-2" for="gender">جنسیت</label>
-          <input v-model="form.gender" name="gender">
-        </div>
-      </div>
+          <UserForm :form="form" />
       </template>
       <template v-else>
         <Map />
       </template>
     </div>
     <div>
-      <button @click="steps = 2">ثبت و ادامه</button>
+      <button @click="onClick">ثبت و ادامه</button>
     </div>
 </template>
