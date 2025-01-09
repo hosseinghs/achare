@@ -13,7 +13,7 @@ enum LoginSteps {
   CHOOSE_LAT_LANG = 2,
 }
 
-const steps = ref<LoginSteps>(LoginSteps.USER_FORM)
+const steps = ref<LoginSteps>(LoginSteps.CHOOSE_LAT_LANG)
 const loading = ref(false)
 const userForm = ref()
 const form = ref<IUserInfo>({

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { ILocation } from './type'
+import type { ILocation } from './type'
+import findMe from '@/assets/images/find-me.jpg'
 import mapMarker from '@/assets/images/map-marker.webp'
-
 const emits = defineEmits<{
 	(e: 'update:model-value', value: ILocation): void;
 }>();
@@ -11,10 +11,14 @@ const props = defineProps<{
   vModel: ILocation
 }>()
 
+interface ILatLng {
+  latlng: ILocation
+}
+
 const marker = ref(null)
 const mapInstance = ref(null)
 
-function createEl (el, url) {
+function createEl (el: 'script', url: string) {
   const script = document.createElement(el)
 
   script.type = 'text/javascript'
@@ -31,19 +35,22 @@ function updateLatLang (latlang: ILocation) {
 }
 
 function getLocation () {
+  if (!mapInstance.value) return
   mapInstance.value.locate({
     setView: true,
     enableHighAccuracy: true
-  }).on('locationfound', ({ latlng }) => {
-    marker.value.setLatLng(latlng)
-    updateLatLang(latlng)
+  }).on('locationfound', ({ latlng }: ILatLng) => {
+    if (marker.value) {
+      marker.value.setLatLng(latlng)
+      updateLatLang(latlng)
+    }
   })
 }
 
-function initMap () {
-  const neshanScript = createEl('script', 'https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js')
+function initMap() {
+  const neshanScript = createEl('script', 'https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js');
 
-  neshanScript.onerror = (e) => console.log('error', e)
+  neshanScript.onerror = (e) => console.log('error', e);
 
   neshanScript.onload = () => {
     const map = new L.Map('map', {
@@ -52,31 +59,52 @@ function initMap () {
       center: [35.6961111111, 51.4230555556],
       zoom: 12,
       traffic: false,
-      maptype: 'neshan'
-    })
+      maptype: 'neshan',
+    });
 
-    mapInstance.value = map
+    mapInstance.value = map;
 
     const initialLatLng = {
-      lat: props.lat ?? null,
-      lng: props.lng ?? null
-    }
+      lat: props.vModel?.lat ?? 35.6961111111,
+      lng: props.vModel?.lng ?? 51.4230555556,
+    };
 
     const markerIcon = L.icon({
       iconUrl: mapMarker,
       iconSize: [24, 32],
-      iconAnchor: [8, 30]
-    })
+      iconAnchor: [8, 30],
+    });
 
-    marker.value = L.marker(initialLatLng, { icon: markerIcon }).addTo(mapInstance.value)
-    marker.value.tooltip = L.tooltip()
+    marker.value = L.marker(initialLatLng, { icon: markerIcon }).addTo(mapInstance.value);
 
-    mapInstance.value.on('click', ({ latlng }) => {
-      marker.value.setLatLng(latlng)
+    // Custom Locate Button
+    const locateControl = L.Control.extend({
+      onAdd: () => {
+        const btn = L.DomUtil.create('button', 'locate-button');
+        btn.innerHTML = `<img src="${findMe}" alt="find me" style="width: 15px; height: 15px;" />`; // Use an image icon
+        btn.style.backgroundColor = 'white';
+        btn.style.border = '1px solid #ccc';
+        btn.style.cursor = 'pointer';
 
-      updateLatLang(latlng)
-    })
-  }
+        btn.onclick = () => {
+          mapInstance.value!.locate({
+            setView: true,
+            enableHighAccuracy: true,
+          }).on('locationfound', (e: L.LocationEvent) => {
+            const latlng = e.latlng;
+            marker.value!.setLatLng(latlng);
+            updateLatLang(latlng);
+          }).on('locationerror', (error) => {
+            console.error('Location error:', error.message);
+          });
+        };
+
+        return btn;
+      },
+    });
+
+    map.addControl(new locateControl({ position: 'bottomright' })); // Add the button to the map
+  };
 }
 
 onMounted(() => initMap())
@@ -104,7 +132,8 @@ div.map-wrapper
   position: relative
   background-color: #eeeeee
 
-button.find-location-btn
-  left: 16px
-  bottom: 16px
+.locate-button
+  font-size: 14px
+  border-radius: 4px
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
 </style>
