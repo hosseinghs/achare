@@ -12,8 +12,6 @@ const addressList = ref<IAddress[]>([])
 const renderedAddressList = ref<IAddress[]>([])
 
 const handleRenderingData = () => {
-  console.log('yo');
-
   if (renderedAddressList.value.length) {
     const length = renderedAddressList.value.length - 1
     const newAddresses = addressList.value.splice(length, 10)
