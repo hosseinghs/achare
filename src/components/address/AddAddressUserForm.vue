@@ -43,9 +43,9 @@ const uglyValidation = (): boolean => {
     isValid = false
   }
 
-  if (!computedForm.value.address.length || computedForm.value.address.length < 6) {
+  if (!computedForm.value.address.length || computedForm.value.address.length < 3) {
     // err
-    errorMessages.coordinate_mobile = errText
+    errorMessages.address = errText
     isValid = false
   }
 
