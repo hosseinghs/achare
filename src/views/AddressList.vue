@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 import { getAllAddresseAPI } from '@/services/address'
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import AddressCardInfo from '@/components/address/AddressCardInfo.vue'
 import AddressEmptyList from '@/components/address/AddressEmptyList.vue'
 import AddressListLoading from '@/components/address/AddressListLoading.vue'
 import type { IAddress } from '@/services/type'
 
 const loading = ref(false)
+const observer = ref<HTMLElement | null>(null)
 const addressList = ref<IAddress[]>([])
 const renderedAddressList = ref<IAddress[]>([])
 
 const handleRenderingData = () => {
+  console.log('yo');
+
   if (renderedAddressList.value.length) {
     const length = renderedAddressList.value.length - 1
     const newAddresses = addressList.value.splice(length, 10)
@@ -31,6 +34,34 @@ const getAllAddress = async () => {
 
 getAllAddress()
 
+const interCallback = function (entries) {
+  if (entries) {
+    const [entry] = entries;
+    if (entry.isIntersecting) handleRenderingData()
+  }
+};
+
+const registerIntersectionObserver = () => {
+  if (observer.value) {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    }
+
+    const ob = new IntersectionObserver(interCallback, options)
+    ob.observe(observer.value)
+  }
+}
+
+onMounted(() => {
+  watch(() => [observer.value, addressList.value], async () => {
+    if (addressList.value.length) {
+      registerIntersectionObserver()
+    }
+  })
+})
+
 </script>
 
 <template>
@@ -38,10 +69,10 @@ getAllAddress()
     <h5>آدرس ها و مشخصات</h5>
     <AddressListLoading v-if="loading" />
     <div v-else-if="!loading && addressList.length" class="address_list">
-      <template v-for="(address, i) in renderedAddressList" :key="address.id">
+      <template v-for="(address) in renderedAddressList" :key="address.id">
         <AddressCardInfo :address="address" class="mb-4" />
-        <div v-if="i === renderedAddressList.length - 1" ref="observer" @scroll="handleRenderingData">last</div>
       </template>
+      <div ref="observer" />
     </div>
     <AddressEmptyList v-else />
   </div>
