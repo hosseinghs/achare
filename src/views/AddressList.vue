@@ -27,9 +27,18 @@ getAllAddress()
   <div class="container">
     <h5>آدرس ها و مشخصات</h5>
     <AddressListLoading v-if="loading" />
-    <div v-else-if="!loading && addressList.length">
+    <div v-else-if="!loading && addressList.length" class="address_list">
       <AddressCardInfo v-for="address in addressList" :address="address" :key="address.id" class="mb-4" />
     </div>
     <AddressEmptyList v-else />
   </div>
 </template>
+
+
+<style scoped lang="sass">
+.address_list
+  max-height: 700px
+  overflow-y: scroll
+  overflow-x: hidden
+
+</style>
