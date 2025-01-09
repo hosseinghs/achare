@@ -34,28 +34,16 @@ function updateLatLang (latlang: ILocation) {
   emits('update:model-value', latlang)
 }
 
-function getLocation () {
-  if (!mapInstance.value) return
-  mapInstance.value.locate({
-    setView: true,
-    enableHighAccuracy: true
-  }).on('locationfound', ({ latlng }: ILatLng) => {
-    if (marker.value) {
-      marker.value.setLatLng(latlng)
-      updateLatLang(latlng)
-    }
-  })
-}
-
 function initMap() {
   const neshanScript = createEl('script', 'https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js');
 
   neshanScript.onerror = (e) => console.log('error', e);
+  console.log(import.meta);
 
   neshanScript.onload = () => {
     const map = new L.Map('map', {
       poi: true,
-      key: 'web.44cb547d8a494e51b43b3c3bd237cefa',
+      key: import.meta.env.VITE_NESHAN_KEY,
       center: [35.6961111111, 51.4230555556],
       zoom: 12,
       traffic: false,
