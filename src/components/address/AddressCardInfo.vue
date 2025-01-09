@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IAdress } from '@/services/type.d.ts'
+import type { IAddress } from '@/services/type.d.ts'
 
 defineProps<{
-  address: IAdress
+  address: IAddress
 }>()
 
 const showGender = (g?: 'male' | 'female'): string => {

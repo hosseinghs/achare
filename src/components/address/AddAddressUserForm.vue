@@ -80,17 +80,19 @@ defineExpose({
           <TextField v-model="computedForm.address" name="address" label="آدرس" :error-msg="errorMessages.address" />
         </div>
         <div class="form-item">
-          <label class="pb-2" for="gender">جنسیت</label>
-          <fieldset class="">
-            <div>
-              <label for="male-gender">آقا</label>
-              <input v-model="computedForm.gender" value="male" name="male-gender" type="radio">
-            </div>
-            <div>
-              <label for="female-gender">خانم</label>
-              <input v-model="computedForm.gender" value="female" name="female-gender" type="radio">
-            </div>
-          </fieldset>
+          <div class="d-flex align-items-center">
+              <label for="gender" class="ms-4">جنسیت</label>
+              <fieldset class="d-flex items-center">
+              <span class="ms-4">
+                <input v-model="computedForm.gender" value="male" name="male-gender" type="radio">
+                <label class="me-1" for="male-gender">آقا</label>
+              </span>
+              <span>
+                <input v-model="computedForm.gender" value="female" name="female-gender" type="radio">
+                <label class="me-1" for="female-gender">خانم</label>
+              </span>
+            </fieldset>
+          </div>
         </div>
       </div>
   </div>
@@ -104,6 +106,12 @@ defineExpose({
   gap: 1rem
   grid-template-columns: repeat(3, 1fr)
 
+  .form-item.address
+    grid-column: span 2
+
   @media (max-width: 768px)
     grid-template-columns: repeat(1, 1fr)
+
+    .form-item.address
+      grid-column: span 1
 </style>

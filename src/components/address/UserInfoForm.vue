@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 
 import type { IUserInfo } from '@/services/type'
-import type { ILocation } from '@/Base/type.d.ts'
+import type { ILocation } from '@/Base/map/type.d.ts'
 import { createAddressAPI } from '@/services/address'
 
 import Map from '@/components/Base/map/index.vue'
@@ -61,11 +61,11 @@ const createAddress = async () => {
 
 <template>
   <h5 class="mb-3">ثبت آدرس</h5>
-  <div class="bg-white px-4 py-2">
+  <div class="bg-white px-4 py-3 rounded">
     <AddAddressUserForm ref="userForm" v-if="steps === LoginSteps.USER_FORM" :form="form" />
     <Map v-else v-model="latLang" />
   </div>
-  <div>
+  <div class="mt-4">
     <button @click="onClick">ثبت و ادامه</button>
   </div>
 </template>
